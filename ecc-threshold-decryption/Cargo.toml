@@ -1,5 +1,5 @@
 [package]
-name = "ecc_mpc-tss_study"
+name = "ecc-threshold-decryption"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,3 +7,4 @@ edition = "2021"
 rand = "0.8"
 num-bigint = "0.4"
 num-traits = "0.2"
+elliptic-curve = "0.13.8"
