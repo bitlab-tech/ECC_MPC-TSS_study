@@ -48,7 +48,7 @@ async function main() {
 
   const new_addition_secret = secret + 5;
   const computed_addition_shares = shares.slice(0, t).map(share => {
-    return { x: share.x, y: share.y * 2 };
+    return { x: share.x, y: share.y + 5 };
   });
   const new_combined_addition_secret = combine(computed_addition_shares);
   console.log('Updated reconstructed addition secret:', new_combined_addition_secret);
