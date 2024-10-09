@@ -72,7 +72,7 @@ async function main() {
   );
 
   const secret2 = 5;
-  const shares2 = split(secret2, 10, 3);
+  const shares2 = split(secret2, 10, 2);
   const computed_shares2 = shares.slice(0, t).map((share, i) => {
     return { x: share.x, y: share.y + shares2[i].y };
   });
