@@ -28,9 +28,9 @@ These points $(x, y)$ are distributed to participants, and any subset of $t$ poi
 To reconstruct the secret, the code uses **Lagrange interpolation** to recover the constant term of the polynomial $f(0)$, which is the secret. Lagrange interpolation allows you to compute the original polynomial based on the known shares $(x, y)$, as long as you have at least $t$ shares.
 
 The key formula used is:
-$
-f(0) = \sum_{j=1}^{t} y_j \cdot \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j - x_m}
-$
+
+$f(0) = \sum_{j=1}^{t} y_j \cdot \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j - x_m}$
+
 where $(x_j, y_j)$ are the known shares.
 
 ### Limited Homomorphism
