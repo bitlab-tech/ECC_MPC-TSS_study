@@ -34,21 +34,23 @@ $f(0) = \sum_{j=1}^{t} y_j \cdot \prod_{\substack{1 \leq m \leq t \\ m \neq j}} 
 where $(x_j, y_j)$ are the known shares.
 
 ### Limited Homomorphism
-One key aspect of this implementation is its **limited homomorphic properties**:
-- You can perform calculations on individual shares (e.g., multiply a share by a constant or add a constant to a share).
-- However, **you cannot perform operations between shares** (e.g., adding two shares together) without losing the integrity of the secret.
+One key aspect of this implementation is its limited homomorphic properties, which allow for the following operations:
 
-This means that while you can adjust individual shares independently (such as multiplying a share by 2), combining operations on multiple shares does not work under the same cryptographic guarantees.
+- Addition: You can add the shares of two secrets, provided that:
+  - Both secrets are shared using polynomials of the same degree.
+  - The addition is performed on all shares corresponding to the same $x$-values.
 
-Shamir's Secret Sharing exhibits **homomorphic properties** for **addition** and **scalar multiplication**, meaning you can add or multiply the shares and get the correct result when the secret is reconstructed.
+  The result of the addition will be equal to the sum of the two secrets $(s_1 + s_2)$, which can be recovered using Lagrange interpolation.
 
-However, it does not natively support multiplication of secrets without more complex operations, as multiplying shares results in a polynomial of higher degree.
+- Multiplication by a constant: You can multiply each share $y_i$ by a constant $c$, which will correctly reflect when the secret is reconstructed.
+
+- Multiplication between shares: it's **not possible** since the degree of the resulting polynomial will be higher, potentially requiring more shares to reconstruct the secret.
 
 #### Example:
-- If you have a share $(x_1, y_1)$, you can safely multiply $y_1$ by a constant.
-- However, adding the $y$-values of two different shares will not give a meaningful result.
+- If you have shares $(x_1, y_1)$ for one secret and $(x_1, y_2)$ for another secret, and both are represented by polynomials of the same degree, you can safely add the corresponding y-values to get a share for  $s_1 + s_2$.
+- Similarly, multiplying a share ​$y_1$ by a constant $c$ will yield a valid share of the scaled secret.
 
-This is due to the underlying structure of the polynomial, where the shares are points on different parts of the polynomial curve, and combining them directly does not produce valid results.
+However, **adding or multiplying shares across different polynomials of different degrees or performing operations on only some shares (instead of all)** will lead to incorrect results.
 
 ### Conclusion
-This implementation demonstrates the secure splitting and reconstruction of secrets using Shamir's Secret Sharing, along with the ability to perform limited homomorphic operations on the shares. However, caution should be exercised when performing operations on the shares, as combining them directly could result in incorrect outcomes.
+This implementation demonstrates secure splitting and reconstruction of secrets using Shamir's Secret Sharing, with limited homomorphic properties that allow for addition and multiplication under specific conditions. When performing operations on shares, ensure they are done on all shares and on polynomials of the same degree or less to preserve the integrity of the scheme.

@@ -70,6 +70,18 @@ async function main() {
     'Updated multiplication secret is equal to combined secret: ',
     new_combined_multiplication_secret === new_multiplication_secret
   );
+
+  const secret2 = 5;
+  const shares2 = split(secret2, 10, 3);
+  const computed_shares2 = shares.slice(0, t).map((share, i) => {
+    return { x: share.x, y: share.y + shares2[i].y };
+  });
+  const combined_secret2 = combine(computed_shares2);
+  console.log('Reconstructed secret from shares of secret2:', combined_secret2);
+  console.log(
+    'Reconstructed secret from shares of secret2 is equal to secret + secret2: ',
+    combined_secret2 === secret + secret2
+  );
 }
 
 main();
