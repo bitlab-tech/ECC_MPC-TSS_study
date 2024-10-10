@@ -47,8 +47,8 @@ One key aspect of this implementation is its limited homomorphic properties, whi
 - Multiplication between shares: it's **not possible** since the degree of the resulting polynomial will be higher, potentially requiring more shares to reconstruct the secret.
 
 #### Example:
-- If you have shares $(x_1, y_1)$ for one secret and $(x_1, y_2)$ for another secret, and both are represented by polynomials of the same degree, you can safely add the corresponding y-values to get a share for  $s_1 + s_2$.
-- Similarly, multiplying a share ​$y_1$ by a constant $c$ will yield a valid share of the scaled secret.
+- If you have shares $(x_1, y_1)$ for one secret and $(x_1, y_2)$ for another secret, and both are represented by polynomials of the same degree, you can safely add the corresponding $y$-values to get a share for  $s_1 + s_2$.
+- Similarly, multiplying a share ​$(y_1)$ by a constant $c$ will yield a valid share of the scaled secret.
 
 However, **adding or multiplying shares across different polynomials of different degrees or performing operations on only some shares (instead of all)** will lead to incorrect results.
 
