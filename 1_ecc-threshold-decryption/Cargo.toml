@@ -1,5 +1,5 @@
 [package]
-name = "ecc-threshold-decryption"
+name = "1_ecc-threshold-decryption"
 version = "0.1.0"
 edition = "2021"
 

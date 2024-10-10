@@ -1,4 +1,5 @@
 import { randomInt } from "crypto";
+const p = 62687;
 
 function split(sec, n, t) {
   const shares = [];
@@ -14,7 +15,7 @@ function split(sec, n, t) {
     for (let j = 0; j < coefficients.length; j++) {
       y += coefficients[j] * Math.pow(i, j + 1);
     }
-    shares.push({ x: i, y });
+    shares.push({ x: i, y: y % p });
   }
   return shares;
 }
@@ -33,7 +34,7 @@ function lagrange_interpolate(shares) {
     }
     result += (shares[i].y * basis);
   }
-  return result;
+  return result % p;
 }
 
 async function main() {
