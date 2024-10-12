@@ -1,12 +1,33 @@
 import { randomInt } from "crypto";
 const p = 62687;
 
+function mod(n, p) {
+  return ((n % p) + p) % p;
+}
+
+function modInverseFermat(a, p) {
+  return modPow(a, p - 2, p); // Using Fermat's little theorem for prime p
+}
+
+function modPow(base, exp, mod) {
+  let result = 1;
+  base = base % mod;
+  while (exp > 0) {
+    if (exp % 2 == 1) {
+      result = (result * base) % mod;
+    }
+    exp = Math.floor(exp / 2);
+    base = (base * base) % mod;
+  }
+  return result;
+}
+
 function split(sec, n, t) {
   const shares = [];
   const degrees = t - 1;
   const coefficients = [];
   for (let i = 0; i < degrees; i++) {
-    const coefficient = randomInt(1, 256);
+    const coefficient = randomInt(1, p-1);
     console.log(`Coefficient for degree ${i+1}: ${coefficient}`);
     coefficients.push(coefficient);
   }
@@ -30,11 +51,13 @@ function lagrange_interpolate(shares) {
     let basis = 1;
     for (let j = 0; j < shares.length; j++) {
       if (i === j) continue;
-      basis *= (0 - shares[j].x) / (shares[i].x - shares[j].x);
+      let numerator = mod(0 - shares[j].x, p);
+      let denominator = mod(shares[i].x - shares[j].x, p);
+      basis = mod(basis * numerator * modInverseFermat(denominator, p), p);
     }
-    result += (shares[i].y * basis);
+    result += mod(shares[i].y * basis, p);
   }
-  return result % p;
+  return mod(result, p);
 }
 
 async function main() {
