@@ -1,13 +1,13 @@
 # Threshold Diffie-Hellman Protocol using Shamir's Secret Sharing (SSS) and ECDH
 
-This implementation combines Shamir's Secret Sharing (SSS) with Elliptic Curve Diffie-Hellman (ECDH) to distribute a private key across multiple participants, allowing them to collaboratively compute the shared secret without any participant knowing the full private key. The key idea here is that the Lagrange interpolation on the shares' $ y $-coordinates, weighted by their Lagrange coefficients based on $ x $, enables the participants to recover the secret key contributions during the ECDH operation.
+This implementation combines Shamir's Secret Sharing (SSS) with Elliptic Curve Diffie-Hellman (ECDH) to distribute a private key across multiple participants, allowing them to collaboratively compute the shared secret without any participant knowing the full private key. The key idea here is that the Lagrange interpolation on the shares' $y$-coordinates, weighted by their Lagrange coefficients based on $x$, enables the participants to recover the secret key contributions during the ECDH operation.
 
 This POC is based partly on the research paper: [Threshold Diffie — Hellman Protocol
 ](https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=pdma&paperid=536&option_lang=eng) done by **D.N. Kolegov and Yu.R. Khalniyazova**. A translation can be found [here](translation.pdf).
 
 ## Overview of the Protocol
 
-- **Private Key Splitting**: The secret (private key) is divided into several shares using Shamir’s Secret Sharing scheme. Each share corresponds to a point on a polynomial, and at least $ t $ shares are required to reconstruct the secret.
+- **Private Key Splitting**: The secret (private key) is divided into several shares using Shamir’s Secret Sharing scheme. Each share corresponds to a point on a polynomial, and at least $t$ shares are required to reconstruct the secret.
   
 - **ECDH Key Exchange**: Elliptic Curve Diffie-Hellman is used to establish a shared secret between two parties, Alice and Bob, without revealing their private keys.
 
@@ -17,7 +17,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
    The private key is split into multiple shares using a polynomial of degree $ t-1 $.
    
-   Each share corresponds to a pair $ (x_i, y_i) $, where:
+   Each share corresponds to a pair $(x_i, y_i)$, where:
    $y = f(x) = \text{{secret}} + a_1 \cdot x + a_2 \cdot x^2 + \dots + a_{t-1} \cdot x^{t-1}$
    
    Here, $ a_1, a_2, \dots, a_{t-1} $ are random coefficients, and the secret is the constant term of the polynomial.
@@ -34,15 +34,15 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
 3. **ECDH Operation**:
 
-    In an ECDH exchange, Alice has a private key $ a $ and public key $ A = a \cdot G $
+    In an ECDH exchange, Alice has a private key $ a $ and public key $A = a \cdot G$
   
-    Bob has a private key $ b $ and public key $ B = b \cdot G $.
+    Bob has a private key $b$ and public key $B = b \cdot G$.
     
     They can compute a shared secret using:
       - $\text{{Alice computes}}: a \cdot B = a \cdot (b \cdot G)$
       - $\text{{Bob computes}}: b \cdot A = b \cdot (a \cdot G)$
     
-    The shared secret is the point $ ab \cdot G $ on the elliptic curve.
+    The shared secret is the point $ab \cdot G$ on the elliptic curve.
 
 4. **Threshold-Based ECDH**:
 
