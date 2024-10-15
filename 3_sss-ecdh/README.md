@@ -15,7 +15,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
 1. **Private Key Sharing**:
 
-   The private key is split into multiple shares using a polynomial of degree $ t-1 $.
+   The private key is split into multiple shares using a polynomial of degree $t-1$.
    
    Each share corresponds to a pair $(x_i, y_i)$, where:
    $y = f(x) = \text{{secret}} + a_1 \cdot x + a_2 \cdot x^2 + \dots + a_{t-1} \cdot x^{t-1}$
@@ -52,7 +52,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
     - Shared secret $S= a \cdot B = b \cdot A \ (1)$
 
-    - Alice private key $a = \sum_{i=1}^{t} y_i \cdot \lambda_i (2)$
+    - Alice private key $a = \sum_{i=1}^{t} y_i \cdot \lambda_i \ (2)$
 
     From $(1)$ and $(2)$ we have:
 
@@ -66,7 +66,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
     The Lagrange coefficient $ \lambda_i $ is applied to their share, and they compute:
 
     $S_i = (\lambda_i \cdot x_i) \cdot B$
-    Where $ B $ is Bob's public key and $ x_i $ is the share of Alice's private key.
+    Where $B$ is Bob's public key and $x_i$ is the share of Alice's private key.
     
     The final shared secret is obtained by summing all partial results:
     $S = \sum S_i$
