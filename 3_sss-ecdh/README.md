@@ -28,13 +28,13 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
    
    $\lambda_i = \prod_{\substack{1 \leq j \leq t \\ j \neq i}} \frac{0 - x_j}{x_i - x_j}$
    
-   Part $i$ of secret is reconstructed by summing the contributions of each share's $ y $-value, multiplied by its Lagrange coefficient:
+   Part $i$ of secret is reconstructed by summing the contributions of each share's $y$-value, multiplied by its Lagrange coefficient:
    
    $w_i = y_i \cdot \lambda_i$
 
 3. **ECDH Operation**:
 
-    In an ECDH exchange, Alice has a private key $ a $ and public key $A = a \cdot G$
+    In an ECDH exchange, Alice has a private key $a$ and public key $A = a \cdot G$
   
     Bob has a private key $b$ and public key $B = b \cdot G$.
     
