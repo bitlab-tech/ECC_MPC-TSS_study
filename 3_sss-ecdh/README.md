@@ -63,7 +63,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
     In this implementation, each agent holds a share of the private key and computes a partial ECDH operation using their share.
 
-    The Lagrange coefficient $ \lambda_i $ is applied to their share, and they compute:
+    The Lagrange coefficient $\lambda_i$ is applied to their share, and they compute:
 
     $S_i = (\lambda_i \cdot x_i) \cdot B$
     Where $B$ is Bob's public key and $x_i$ is the share of Alice's private key.
