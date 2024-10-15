@@ -20,7 +20,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
    Each share corresponds to a pair $(x_i, y_i)$, where:
    $y = f(x) = \text{{secret}} + a_1 \cdot x + a_2 \cdot x^2 + \dots + a_{t-1} \cdot x^{t-1}$
    
-   Here, $ a_1, a_2, \dots, a_{t-1} $ are random coefficients, and the secret is the constant term of the polynomial.
+   Here, $a_1, a_2, \dots, a_{t-1}$ are random coefficients, and the secret is the constant term of the polynomial.
 
 2. **Lagrange Interpolation**:
    
