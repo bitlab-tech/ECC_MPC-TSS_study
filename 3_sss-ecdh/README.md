@@ -65,8 +65,8 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
     The Lagrange coefficient $\lambda_i$ is applied to their share, and they compute:
 
-    $S_i = (\lambda_i \cdot x_i) \cdot B$
-    Where $B$ is Bob's public key and $x_i$ is the share of Alice's private key.
+    $S_i = (\lambda_i \cdot y_i) \cdot B$
+    Where $B$ is Bob's public key and $y_i$ is the share of Alice's private key.
     
     The final shared secret is obtained by summing all partial results:
     $S = \sum S_i$
