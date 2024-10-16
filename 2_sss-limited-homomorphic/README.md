@@ -1,6 +1,6 @@
 # Shamir's Secret Sharing limited homomorphism
 
-This code implements **Shamir's Secret Sharing** (SSS) scheme in Node.js, allowing you to securely split a secret into multiple shares and later reconstruct it from a subset of those shares. It leverages **Lagrange interpolation** for combining the shares.
+This code implements [Shamir's Secret Sharing (SSS)](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing) scheme in Node.js, allowing you to securely split a secret into multiple shares and later reconstruct it from a subset of those shares. It leverages **Lagrange interpolation** for combining the shares.
 
 ### How Shamir's Secret Sharing Works
 Shamir's scheme divides a secret $( s )$ into $( n )$ shares such that:
