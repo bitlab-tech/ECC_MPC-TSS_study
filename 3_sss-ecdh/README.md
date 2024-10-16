@@ -27,7 +27,7 @@ This POC is partly based on the research paper: [Threshold Diffie — Hellman Pr
    
    $\lambda_i = \prod_{\substack{1 \leq j \leq t \\ j \neq i}} \frac{0 - x_j}{x_i - x_j}$
    
-   Part $i$ of secret is reconstructed by summing the contributions of each share's $y$-value, multiplied by its Lagrange coefficient:
+   Part $i$ of secret is reconstructed by multiplying share $i$'s $y$-value with its Lagrange coefficient:
    
    $w_i = y_i \cdot \lambda_i$
 
