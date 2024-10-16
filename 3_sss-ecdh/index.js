@@ -1,25 +1,50 @@
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
-const randomInt = require('crypto').randomInt;
+const randomBytes = require('crypto').randomBytes;
 var BigNumber = require('bignumber.js');
 
-const p = 62687;
+// const p = new BigNumber('115792089237316195423570985008687907852837564279074904382605163141518161494337');
+const p = ec.curve.p; // Prime field of the curve
+const n = new BigNumber(ec.curve.n); // Order of the curve
 
-function split(sec, n, t) {
+function modInverseFermat(a, p) {
+  return modPow(a, p.minus(2), p); // Using Fermat's Little Theorem for prime p
+}
+
+function modPow(base, exp, mod) {
+  let result = new BigNumber(1);
+  base = base.mod(mod);
+  while (exp.isGreaterThan(0)) {
+    if (exp.mod(2).isEqualTo(1)) {
+      result = result.times(base).mod(mod);
+    }
+    exp = exp.idiv(2);  // Use integer division
+    base = base.times(base).mod(mod);
+  }
+  return result;
+}
+
+function split(sec, nShares, t) {
   const shares = [];
   const degrees = t - 1;
   const coefficients = [];
+  
+  // Generate random coefficients between 1 and p - 1
   for (let i = 0; i < degrees; i++) {
-    const coefficient = randomInt(1, p-1);
-    console.log(`Coefficient for degree ${i+1}: ${coefficient}`);
+    const coefficient = new BigNumber(
+      randomBytes(32).toString('hex'), 16
+    ).mod(n.minus(1)).plus(1);
+    console.log(`Coefficient for degree ${i+1}: ${coefficient.toString()}`);
     coefficients.push(coefficient);
   }
-  for (let i = 1; i <= n; i++) {
-    let y = sec;
+  
+  // Calculate shares using the secret and the coefficients
+  for (let i = 1; i <= nShares; i++) {
+    let y = new BigNumber(sec);
     for (let j = 0; j < coefficients.length; j++) {
-      y += coefficients[j] * Math.pow(i, j + 1);
+      y = y.plus(coefficients[j].times(new BigNumber(i).pow(j + 1))).mod(n);
     }
-    shares.push({ x: i, y: y });
+    shares.push({ x: new BigNumber(i), y: y });
   }
   return shares;
 }
@@ -29,50 +54,53 @@ function combine(shares) {
 }
 
 function lagrange_interpolate(shares) {
-  let result = 0;
+  let result = new BigNumber(0);
+  
   for (let i = 0; i < shares.length; i++) {
-    let basis = 1;
+    let basis = new BigNumber(1);
+    
     for (let j = 0; j < shares.length; j++) {
       if (i === j) continue;
-      let numerator = 0 - shares[j].x;
-      let denominator = shares[i].x - shares[j].x;
-      basis = basis * numerator / denominator;
+      let numerator = new BigNumber(0).minus(shares[j].x);
+      let denominator = shares[i].x.minus(shares[j].x);
+      basis = basis.times(numerator).times(modInverseFermat(denominator, n));
     }
-    result += shares[i].y * basis;
+    
+    result = result.plus(shares[i].y.times(basis));
   }
-  return result;
+  return result.mod(n);
 }
 
-function lagrange_coefficient(i, t) {
-  let basis = 1;
+function lagrange_coefficient(x, t) {
+  let basis = new BigNumber(1);
   for (let j = 1; j <= t; j++) {
-    if (i + 1 === j) continue;
-    let numerator = 0 - j;
-    let denominator = i + 1 - j;
-    basis = basis * numerator / denominator;
+    if (x.isEqualTo(j)) continue;
+    let numerator = new BigNumber(0).minus(j);
+    let denominator = new BigNumber(x).minus(j);
+    basis = basis.times(numerator).times(modInverseFermat(denominator, n)).mod(n);
   }
   return basis;
 }
 
 function main() {  
-  var A = ec.keyFromPrivate(7n);
+  var A = ec.genKeyPair();
   var B = ec.genKeyPair();
   
   var Ap = A.getPrivate();
   console.log("A-priv: ", Ap.toString(16));
 
-  const shares = split(7, 5, 3);
+  const shares = split(new BigNumber(Ap.toString()), 5, 3);
   console.log("Shares: ", shares.map(share => ({
-    x: share.x.toString(), y: share.y.toString()
+    x: share.x.toString(), y: share.y.toString(16)
   })));
   
   var AB = A.getPublic().mul(B.getPrivate());
   var BA = B.getPublic().mul(A.getPrivate());
 
-  var AsB = shares.slice(0, 3).map((share, index) => {
-    const share_lagrange_coefficient = lagrange_coefficient(index, 3);
-    const lagrange_interpolate = share.y * share_lagrange_coefficient;
-    const share_key = ec.keyFromPrivate(lagrange_interpolate);
+  var AsB = shares.slice(0, 3).map(share => {
+    const share_lagrange_coefficient = lagrange_coefficient(share.x, 3);
+    const lagrange_interpolate = share.y.times(share_lagrange_coefficient).mod(n);
+    const share_key = ec.keyFromPrivate(lagrange_interpolate.toString(16));
     return B.getPublic().mul(share_key.getPrivate());
   });
 
@@ -80,18 +108,19 @@ function main() {
   console.log("BA: ", BA.getX().toString(16));
 
   const combined = combine(shares.slice(0, 3));
-  console.log("Combine: ", combined);
+  console.log("Reconstructed A private key: ", combined.toString(16));
 
   let reconstructedSecret = AsB[0];
   for (let i = 1; i < AsB.length; i++) {
     const s = AsB[i];
     reconstructedSecret = reconstructedSecret.add(s);
   }
-  console.log("Reconstructed secret: ", reconstructedSecret.getX().toString(16));
+  reconstructedSecret = new BigNumber(reconstructedSecret.getX().toString());
+  console.log("Reconstructed shared secret: ", reconstructedSecret.toString(16));
   console.log(
-    "Reconstructed secret equals AB equals BA: ",
-    reconstructedSecret.getX().toString(16) === AB.getX().toString(16) &&
-    reconstructedSecret.getX().toString(16) === BA.getX().toString(16)
+    'Reconstructed secret from shares is equal to AB and BA: ',
+    reconstructedSecret.toString(16) === AB.getX().toString(16) &&
+    reconstructedSecret.toString(16) === BA.getX().toString(16)
   );
 }
 
