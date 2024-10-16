@@ -70,3 +70,14 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
     
     The final shared secret is obtained by summing all partial results:
     $S = \sum S_i$
+
+## *Note: Finite field arithmetics
+
+  When applying Shamir's Secret Sharing (SSS) to a private key in elliptic curve cryptography (ECC), we perform the secret sharing over the finite field defined by $n$, the order of the base point $G$, rather than the prime field $p$.
+
+  **Reason:**
+
+  The private key in ECC is an integer in the range $[1, n - 1]$, where $n$ is the order of the base point $G$. All cryptographic operations related to private keys (like scalar multiplication) take place modulo $n$, not 
+  $p$. This is because the number of distinct points on the elliptic curve that can be generated from multiples of $G$ is limited by $n$, and the private key space is confined to this range.
+
+  Therefore, when applying Shamir's Secret Sharing to a private key, the shares should be elements of the finite field $F_n$, where all operations (such as addition, multiplication) are performed modulo $n$.

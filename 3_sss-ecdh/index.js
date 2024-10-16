@@ -3,7 +3,6 @@ const ec = new EC('secp256k1');
 const randomBytes = require('crypto').randomBytes;
 var BigNumber = require('bignumber.js');
 
-// const p = new BigNumber('115792089237316195423570985008687907852837564279074904382605163141518161494337');
 const p = ec.curve.p; // Prime field of the curve
 const n = new BigNumber(ec.curve.n); // Order of the curve
 
@@ -115,7 +114,7 @@ function main() {
     const s = AsB[i];
     reconstructedSecret = reconstructedSecret.add(s);
   }
-  reconstructedSecret = new BigNumber(reconstructedSecret.getX().toString());
+  reconstructedSecret = new BigNumber(reconstructedSecret.getX().toString()).mod(n);
   console.log("Reconstructed shared secret: ", reconstructedSecret.toString(16));
   console.log(
     'Reconstructed secret from shares is equal to AB and BA: ',
