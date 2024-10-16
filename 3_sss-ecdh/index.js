@@ -70,12 +70,12 @@ function lagrange_interpolate(shares) {
   return result.mod(n);
 }
 
-function lagrange_coefficient(x, t) {
+function lagrange_coefficient(x, x_coordinates) {
   let basis = new BigNumber(1);
-  for (let j = 1; j <= t; j++) {
-    if (x.isEqualTo(j)) continue;
-    let numerator = new BigNumber(0).minus(j);
-    let denominator = new BigNumber(x).minus(j);
+  for (let j = 0; j < x_coordinates.length; j++) {
+    if (x.isEqualTo(x_coordinates[j])) continue;
+    let numerator = new BigNumber(0).minus(x_coordinates[j]);
+    let denominator = new BigNumber(x).minus(x_coordinates[j]);
     basis = basis.times(numerator).times(modInverseFermat(denominator, n)).mod(n);
   }
   return basis;
@@ -96,8 +96,10 @@ function main() {
   var AB = A.getPublic().mul(B.getPrivate());
   var BA = B.getPublic().mul(A.getPrivate());
 
-  var AsB = shares.slice(0, 3).map(share => {
-    const share_lagrange_coefficient = lagrange_coefficient(share.x, 3);
+  const sharesUsed = [shares[0], shares[2], shares[3]];
+  var AsB = sharesUsed.map(share => {
+    const x_coordinates = sharesUsed.map(share => share.x);
+    const share_lagrange_coefficient = lagrange_coefficient(share.x, x_coordinates);
     const lagrange_interpolate = share.y.times(share_lagrange_coefficient).mod(n);
     const share_key = ec.keyFromPrivate(lagrange_interpolate.toString(16));
     return B.getPublic().mul(share_key.getPrivate());
