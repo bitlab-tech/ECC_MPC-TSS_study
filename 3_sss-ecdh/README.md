@@ -2,8 +2,7 @@
 
 This implementation combines Shamir's Secret Sharing (SSS) with Elliptic Curve Diffie-Hellman (ECDH) to distribute a private key across multiple participants, allowing them to collaboratively compute the shared secret without any participant knowing the full private key. The key idea here is that the Lagrange interpolation on the shares' $y$-coordinates, weighted by their Lagrange coefficients based on $x$, enables the participants to recover the secret key contributions during the ECDH operation.
 
-This POC is based partly on the research paper: [Threshold Diffie — Hellman Protocol
-](https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=pdma&paperid=536&option_lang=eng) done by **D.N. Kolegov and Yu.R. Khalniyazova**. A translation can be found [here](translation.pdf).
+This POC is partly based on the research paper: [Threshold Diffie — Hellman Protocol](https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=pdma&paperid=536&option_lang=eng) (2021) done by **D.N. Kolegov and Yu.R. Khalniyazova**. A translation can be found [here](translation.pdf).
 
 ## Overview of the Protocol
 
