@@ -25,7 +25,7 @@ The code creates shares by evaluating the polynomial at different $( x )$-values
 These points $(x, y)$ are distributed to participants, and any subset of $t$ points can reconstruct the secret.
 
 ### Share Combination using Lagrange Interpolation
-To reconstruct the secret, the code uses **Lagrange interpolation** to recover the constant term of the polynomial $f(0)$, which is the secret. Lagrange interpolation allows you to compute the original polynomial based on the known shares $(x, y)$, as long as you have at least $t$ shares.
+To reconstruct the secret, the code uses [Lagrange interpolation](https://en.wikipedia.org/wiki/Lagrange_polynomial) to recover the constant term of the polynomial $f(0)$, which is the secret. Lagrange interpolation allows you to compute the original polynomial based on the known shares $(x, y)$, as long as you have at least $t$ shares.
 
 The key formula used is:
 
