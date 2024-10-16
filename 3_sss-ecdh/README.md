@@ -46,7 +46,7 @@ This POC is based partly on the research paper: [Threshold Diffie — Hellman Pr
 
 4. **Threshold-Based ECDH**:
 
-    Assumming that Alice split her private key $a$ into $n$ shares with threshold $t$ and wants to perform ECDH with Bob using his public key $B$.
+    Alice splits her private key $a$ into $n$ shares with threshold $t$ and performs ECDH with Bob using his public key $B$.
 
     Since:
 
