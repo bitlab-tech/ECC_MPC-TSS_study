@@ -35,17 +35,17 @@ function calc_commitments(coefficients, sec) {
 
 function gen_proof(share) {
   return {
-    x: share.x,
-    proof: mod(Math.pow(g, share.y), p)
+    i: share.x,
+    value: mod(Math.pow(g, share.y), p)
   };
 }
 
-function verify_proof(commitments, proof, i) {
+function verify_proof(commitments, proof) {
   const expected = commitments.reduce(
     (product, currentValue, j) =>
-      mod(product * Math.pow(currentValue, Math.pow(i, j)), p)
+      mod(product * Math.pow(currentValue, Math.pow(proof.i, j)), p)
   );
-  return expected === proof.proof;
+  return expected === proof.value;
 }
 
 function split(sec, n, t) {
@@ -104,7 +104,7 @@ function main() {
   console.log('Validity proofs:', validity_proofs);
 
   const proof_valid = validity_proofs.map(
-    (proof, index) => verify_proof(shares.commitments, proof, shares.values[index].x)
+    proof => verify_proof(shares.commitments, proof)
   );
   console.log('Proof validity:', proof_valid);
 }
