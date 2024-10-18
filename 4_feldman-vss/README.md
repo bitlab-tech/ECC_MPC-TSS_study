@@ -66,7 +66,7 @@ The polynomial to generate shares for $t=3$ is:
 
 $f(x) = s + a_1x + a_2x^2$
 
-$ \ \ \ \ \ \ \ \ \ = 7 + 8x + 3x^2$
+$f(x) = 7 + 8x + 3x^2$
 
 5 shares are generated as:
 
