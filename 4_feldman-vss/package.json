@@ -1,0 +1,16 @@
+{
+  "name": "4_feldman-vss",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bignumber.js": "^9.1.2",
+    "elliptic": "^6.5.7"
+  }
+}
