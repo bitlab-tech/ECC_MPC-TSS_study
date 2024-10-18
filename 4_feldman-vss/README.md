@@ -104,7 +104,7 @@ $proof_{share2} = g^{y_2} \ mod \ p = 2^2 \ mod \ 23 = 4$
 
 $proof_{share3} = g^{y_3} \ mod \ p = 2^3 \ mod \ 23 = 8$
 
-$proof_{share4} = g^{y_4} \ mod \ p = 2^10 \ mod \ 23 = 12$
+$proof_{share4} = g^{y_4} \ mod \ p = 2^{10} \ mod \ 23 = 12$
 
 $proof_{share5} = g^{y_5} \ mod \ p = 2^1 \ mod \ 23 = 2$
 
