@@ -18,6 +18,55 @@ When implementing this scheme, it's important to first choose primes $p$ and $q$
 Then $g$ needs to be chosen:
   - $g$ is the generator of a subgroup of order $q$ in the multiplicative group modulo $p$, meaning: $g^q \ mod \ p=1$, and no smaller power of $g$ equals $1 \ mod \ p$.
 
+#### Example of Choosing Primes and a Generator:
+
+Let's find a pair of primes $p$ and $q$ such that $q \mid (p - 1)$, and determine $g$, a generator of a subgroup of order $q$ in the multiplicative group modulo $p$.
+
+#### Step-by-Step Process
+
+1. **Choosing $p$ and $q$:**
+   - First, $p$ is a prime, and $q$ must also be a prime such that $q \mid (p - 1)$. This means $p - 1$ must be divisible by $q$.
+   
+   A common way to pick such primes is to first choose $q$, and then calculate $p = kq + 1$ for some integer $k$ until we find a prime $p$.
+
+2. **Finding a Generator $g$:**
+   - $g$ must be a generator of a subgroup of order $q$ in $\mathbb{Z}_p^*$, which is the multiplicative group of integers modulo $p$.
+   - To confirm $g$ is a generator of a subgroup of order $q$, we must verify that $g^q \equiv 1 \mod p$, but for any smaller power of $g$, this is not true.
+
+### Example
+
+Let’s walk through an example using the primes $p = 23$ and $q = 11$.
+
+1. **Check divisibility:**
+   - $23 - 1 = 22$
+   - $22 \div 11 = 2$, so $q = 11 \mid (p - 1) = 22$. This satisfies the requirement.
+
+2. **Finding $g$:**
+   - We need to find $g$ such that the order of $g$ in $\mathbb{Z}_p^*$ is $q = 11$. This means $g^{11} \equiv 1 \mod 23$, but for any smaller powers, $g^k \not\equiv 1 \mod 23$ for $k < 11$.
+   
+   Let’s try $g = 2$:
+   - Compute powers of $2 \mod 23$:
+     - $2^1 \mod 23 = 2$
+     - $2^2 \mod 23 = 4$
+     - $2^3 \mod 23 = 8$
+     - $2^4 \mod 23 = 16$
+     - $2^5 \mod 23 = 9$
+     - $2^6 \mod 23 = 18$
+     - $2^7 \mod 23 = 13$
+     - $2^8 \mod 23 = 3$
+     - $2^9 \mod 23 = 6$
+     - $2^{10} \mod 23 = 12$
+     - $2^{11} \mod 23 = 1$ ✅
+
+   Since $2^{11} \equiv 1 \mod 23$ and no smaller power equals $1$, $g = 2$ is a generator of a subgroup of order $q = 11$.
+
+### Final Result
+- **Prime $p$:** 23
+- **Prime $q$:** 11
+- **Generator $g$:** 2
+
+This means that $g = 2$ is a generator of a subgroup of order $q = 11$ in the multiplicative group modulo $p = 23$.
+
 ### Secret Splitting
 
 The secret sharing scheme works by representing the secret as the constant term of a polynomial:
