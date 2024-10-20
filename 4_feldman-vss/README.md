@@ -6,6 +6,26 @@ This repository contains a **proof of concept (POC)** implementation of a Verifi
 
 The core cryptographic technique used for this scheme involves [Feldman Verifiable Secret Sharing (Feldman VSS)](https://en.wikipedia.org/wiki/Verifiable_secret_sharing#Feldman's_scheme), which builds on [Shamir's Secret Sharing (SSS)](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing) with added verification using modular arithmetic.
 
+## Table of Contents ##
+
+- [Mathematical Explanation](#mathematical-explanation)
+  - [Modular arithmetic:](#modular-arithmetic)
+    - [Example of Choosing Primes and a Generator:](#example-of-choosing-primes-and-a-generator)
+      - [Step-by-Step Process](#step-by-step-process)
+      - [Example](#example)
+      - [Final Result](#final-result)
+  - [Secret Splitting](#secret-splitting)
+  - [Generating Commitments](#generating-commitments)
+  - [Verifying Shares](#verifying-shares)
+- [Example](#example-1)
+  - [Step 1: Secret Sharing Polynomial](#step-1--secret-sharing-polynomial)
+  - [Step 2: Public Commitments](#step-2--public-commitments)
+  - [Step 3: Share verification](#step-3--share-verification)
+- [Implementation](#implementation)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 ## Mathematical Explanation
 
 ### Modular arithmetic:
@@ -22,7 +42,7 @@ Then $g$ needs to be chosen:
 
 Let's find a pair of primes $p$ and $q$ such that $q \mid (p - 1)$, and determine $g$, a generator of a subgroup of order $q$ in the multiplicative group modulo $p$.
 
-#### Step-by-Step Process
+##### Step-by-Step Process
 
 1. **Choosing $p$ and $q$:**
    - First, $p$ is a prime, and $q$ must also be a prime such that $q \mid (p - 1)$. This means $p - 1$ must be divisible by $q$.
@@ -33,7 +53,7 @@ Let's find a pair of primes $p$ and $q$ such that $q \mid (p - 1)$, and determin
    - $g$ must be a generator of a subgroup of order $q$ in $\mathbb{Z}_p^*$, which is the multiplicative group of integers modulo $p$.
    - To confirm $g$ is a generator of a subgroup of order $q$, we must verify that $g^q \equiv 1 \mod p$, but for any smaller power of $g$, this is not true.
 
-### Example
+##### Example
 
 Let’s walk through an example using the primes $p = 23$ and $q = 11$.
 
@@ -60,7 +80,7 @@ Let’s walk through an example using the primes $p = 23$ and $q = 11$.
 
    Since $2^{11} \equiv 1 \mod 23$ and no smaller power equals $1$, $g = 2$ is a generator of a subgroup of order $q = 11$.
 
-### Final Result
+##### Final Result
 - **Prime $p$:** 23
 - **Prime $q$:** 11
 - **Generator $g$:** 2
