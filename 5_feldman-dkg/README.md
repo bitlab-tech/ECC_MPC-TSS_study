@@ -1,6 +1,6 @@
 # Distributed Key Generation (DKG) with Feldman's Scheme
 
-This repository provides an implementation of **Distributed Key Generation (DKG)** based on [Feldman's verifiable secret sharing scheme](https://en.wikipedia.org/wiki/Verifiable_secret_sharing#Feldman's_scheme). DKG allows a group of participants to collaboratively generate a public/private key pair while ensuring that no single participant learns the private key, enhancing security and fault tolerance in cryptographic systems.
+This repository provides an implementation of [Distributed Key Generation (DKG)](https://en.wikipedia.org/wiki/Distributed_key_generation) based on [Feldman's verifiable secret sharing scheme](https://en.wikipedia.org/wiki/Verifiable_secret_sharing#Feldman's_scheme). **DKG** allows a group of participants to collaboratively generate a public/private key pair while ensuring that no single participant learns the private key, enhancing security and fault tolerance in cryptographic systems.
 
 This POC is partly based on the research paper: [Threshold Diffie — Hellman Protocol](https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=pdma&paperid=536&option_lang=eng) (2021) done by **D.N. Kolegov and Yu.R. Khalniyazova**. A translation can be found [here](translation.pdf).
 
