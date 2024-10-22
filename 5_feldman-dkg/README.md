@@ -28,9 +28,9 @@ In a DKG protocol, multiple participants generate a shared secret (the private k
 ## Distributed Key Generation (DKG) with Feldman VSS
 - Index Assignment: Each participant $P_j$ is assigned an index $j$, which is used in the polynomial for share generation. For simplicity, these indices are often just the participant numbers $j$, though they could be other distinct values known to all.
 
-- Share Generation: In Feldman’s VSS scheme, each participant $P_j$ receives a share of the form $f(j)$, where $f$ is a polynomial chosen by the dealer. In this case, each participant plays the role of the dealer in turn, sharing a random value $u_i$  (this is often done to ensure that no single participant holds too much control over the key generation).
+- Share Generation: In Feldman’s VSS scheme, each participant $P_j$ receives a share of the form $f(j)$, where $f$ is a polynomial chosen by the dealer. In this case, each participant plays the role of the dealer in turn, sharing a random value $u_j$  (this is often done to ensure that no single participant holds too much control over the key generation).
 
-- Final Key Share Computation: After each participant shares their value $u_i$ , the shares from all participants are combined. Thanks to the additive property of Feldman’s VSS, the final share of the secret key $x$ is the sum of the individual shares: $x=\sum_{i}u_i$ This sum is distributed among participants without anyone ever knowing the actual value of $x$.
+- Final Key Share Computation: After each participant shares their value $u_j$ , the shares from all participants are combined. Thanks to the additive property of Feldman’s VSS, the final share of the secret key $x$ is the sum of the individual shares: $x=\sum_{j=1}^{n}u_j$ This sum is distributed among participants without anyone ever knowing the actual value of $x$.
 
 ## Feldman VSS Additive Property
 - Feldman’s scheme has an important **additive homomorphism** property: If participants are given shares $f_i(j)$ of two secrets $a$ and $b$, then by adding the shares of $f_a(j)$ and $f_b(j)$, the participants obtain a share of $a+b$ without needing to explicitly know either $a$ or $b$.
@@ -63,7 +63,7 @@ Let's clarify how this distributed key generation (DKG) protocol using Feldman�
 Each participant will contribute to generating the shared private key.
 
 ### Step 1: Secret Sharing using Feldman VSS
-Each participant $P_j$ selects a random secret $u_i$ , and they will generate shares of their secret using a polynomial $f_j(x)$.
+Each participant $P_j$ selects a random secret $u_j$ , and they will generate shares of their secret using a polynomial $f_j(x)$.
 
 Here’s how each participant generates their share:
 
@@ -159,7 +159,7 @@ Now, to generate the final secret key shares:
 ### Reconstruct the secret
 
 If three participants, say $P_1$, $P_2$ and $P_5$, come together to reconstruct the secret, they use Lagrange interpolation with their shares:
-Using $share_1 = 0$, $share_2 = 0$, $share_5 = 2$ they reconstruct the secret, which is the sum of all $u_i$.
+Using $share_1 = 0$, $share_2 = 0$, $share_5 = 2$ they reconstruct the secret, which is the sum of all $u_j$.
 
 $f(0) =  \sum_{j=1}^{t} y_j \lambda_j \ mod \ q = (y_1\lambda_1 + y_2\lambda_2 + y_3\lambda_3) \ mod \ q$
 
@@ -169,7 +169,7 @@ $\lambda_j = \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j -
 
   $\lambda_1 = \frac{0 - x_2}{x_1 - x_2} \cdot \frac{0 - x_3}{x_1 - x_3} = \frac{0 - 2}{1 - 2} \cdot \frac{0 - 5}{1 - 5} = \frac{-2}{-1} \cdot \frac{-5}{-4} = 2 \cdot \frac{5}{4} \ mod \ 11$
 
-  Since we're working modulo $p$, we'll simplify each step:
+  Since we're working modulo $q$, we'll simplify each step:
   - $\frac{5}{4} \ mod \ 11 = 5 \cdot 4^{-1} \ mod \ 11$, where $4^{-1}$ is the modular inverse of $4 \ mod \ 11$.
   - Compute modular inverse of $4 \ mod \ 11: 4^{-1} \ mod \ 11 = 3$ (from [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) or using [the extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)).
   - So, $\frac{5}{4} \ mod \ 11 = 5 \cdot 3 = 15 \ mod \ 11 = 4$
