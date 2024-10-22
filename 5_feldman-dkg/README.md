@@ -171,7 +171,7 @@ $\lambda_j = \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j -
 
   Since we're working modulo $p$, we'll simplify each step:
   - $\frac{5}{4} \ mod \ 11 = 5 \cdot 4^{-1} \ mod \ 11$, where $4^{-1}$ is the modular inverse of $4 \ mod \ 11$.
-  - Compute modular inverse of $4 \ mod \ 11: 4^{-1} \ mod \ 11 = 3$ (from Fermat's Little Theorem or using the extended Euclidean algorithm).
+  - Compute modular inverse of $4 \ mod \ 11: 4^{-1} \ mod \ 11 = 3$ (from [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) or using [the extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)).
   - So, $\frac{5}{4} \ mod \ 11 = 5 \cdot 3 = 15 \ mod \ 11 = 4$
 
   Thus,
