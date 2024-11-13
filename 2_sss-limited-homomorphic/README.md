@@ -5,22 +5,26 @@ This code implements [Shamir's Secret Sharing (SSS)](https://en.wikipedia.org/wi
 ### How Shamir's Secret Sharing Works
 Shamir's scheme divides a secret $( s )$ into $( n )$ shares such that:
 - **Threshold**: You need at least $( t )$ shares to reconstruct the secret.
-- **Polynomial construction**: The secret $( s )$ is encoded as the constant term of a polynomial of degree $( t-1 )$ over a finite prime field $q = p^1$, while the other coefficients are random values.
+- **Polynomial construction**: The secret $( s )$ is encoded as the constant term of a polynomial of degree $( t-1 )$ over $\mathbb{Z}_P $, while the other coefficients are random values.
 
 Each share corresponds to an evaluation of this polynomial at a different $( x )$-value.
 
 For example, if the secret is $( s )$ and you want to split it into $( n = 3 )$ shares with a threshold $( t = 2 )$, the secret is encoded in a polynomial:
-$f(x) = s + a_1 x \ mod \ p$
+
+- $f(x) = s + a_1 x$
+
 where $a_1$ is a randomly chosen coefficient.
 
 Another example, if the secret is $( s )$ and you want to split it into $( n = 5 )$ shares with a threshold $( t = 3 )$, the secret is encoded in a polynomial:
-$f(x) = s + a_1 x + a_2 x^2 \ mod \ p$
+
+- $f(x) = s + a_1 x + a_2 x^2$
+
 where $a_1$ and $a_2$ are randomly chosen coefficients.
 
 ### Share Splitting
-The code creates shares by evaluating the polynomial at different $( x )$-values. Each point $( x, y )$ represents a share, where:
+The code creates shares by evaluating the polynomial at different $x$ values. Each point $( x, y )$ represents a share, where:
 - $x$ is a known value.
-- $y$ is $f(x)$, the result of evaluating the polynomial at $( x )$.
+- $y$ is $f(x)$, the result of evaluating the polynomial at $x$.
 
 These points $(x, y)$ are distributed to participants, and any subset of $t$ points can reconstruct the secret.
 
@@ -29,7 +33,7 @@ To reconstruct the secret, the code uses [Lagrange interpolation](https://en.wik
 
 The key formula used is:
 
-$f(0) = \sum_{j=1}^{t} y_j \cdot \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j - x_m} \ mod \ p$
+$f(0) = \sum_{j=1}^{t} y_j \cdot \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j - x_m}$
 
 where $(x_j, y_j)$ are the known shares.
 

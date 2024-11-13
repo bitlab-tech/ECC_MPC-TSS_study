@@ -72,7 +72,7 @@ This POC is partly based on the research paper: [Threshold Diffie — Hellman Pr
 
 ## *Note: Finite field arithmetics
 
-  When applying Shamir's Secret Sharing (SSS) to a private key in elliptic curve cryptography (ECC), we perform the secret sharing over the [finite field](https://en.wikipedia.org/wiki/Finite_field) defined by $n$, the order of the base point $G$, rather than the prime field $p$.
+  When applying Shamir's Secret Sharing (SSS) to a private key in elliptic curve cryptography (ECC), we perform the secret sharing over the [finite field](https://en.wikipedia.org/wiki/Finite_field) defined by $n$, the order of the base point $G$ of the Elliptic curve in use, rather than the prime field $p$.
 
   **Reason:**
 

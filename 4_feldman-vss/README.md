@@ -36,7 +36,7 @@ When implementing this scheme, it's important to first choose primes $p$ and $q$
   - The commitments (used for verifying the shares) and all computations involving these commitments are calculated modulo $p$.
 
 Then $g$ needs to be chosen:
-  - $g$ is the generator of a subgroup of order $q$ in the multiplicative group modulo $p$, meaning: $g^q \ mod \ p=1$, and no smaller power of $g$ equals $1 \ mod \ p$.
+  - $g$ is the generator of a subgroup of order $q$ in the multiplicative group modulo $p$, meaning: $g^q \mod  p=1$, and no smaller power of $g$ equals $1 \mod  p$.
 
 #### Example of Choosing Primes and a Generator:
 
@@ -113,7 +113,7 @@ Where each $C_i$ corresponds to the polynomial's coefficients.
 
 To verify the validity of a share $(x_i, y_i)$, we check that:
 
-$g^{y_i} \mod p = \prod_{j=0}^{t-1} C_j^{x_i^j} \mod p = C_0 \cdot C_1^{x_i^1} \cdot C_2^{x_i^2} \dots \cdot C_t^{x_i^{t}} \mod p$
+$g^{y_i} \mod p = \left( \prod_{j=0}^{t-1} C_j^{x_i^j} \right) \mod p = \left( C_0 \cdot C_1^{x_i^1} \cdot C_2^{x_i^2} \dots \cdot C_t^{x_i^{t}} \right) \mod p$
 
 Where the left-hand side is computed directly from the share, and the right-hand side is reconstructed using the commitments. If both sides match, the share is considered valid.
 
@@ -139,59 +139,59 @@ $f(x) = 7 + 8x + 3x^2$
 
 5 shares are generated as:
 
-$f(1) = 7 + 8(1) + 3(1)^2 \ mod \ q  = 18 \ mod \ 11 = 7 $
+$f(1) =  7 + 8(1) + 3(1)^2 \mod q  = 18 \mod 11 = 7 $
 
-$f(2) = 7 + 8(2) + 3(2)^2 \ mod \ q  = 35 \ mod \ 11 = 2$
+$f(2) = 7 + 8(2) + 3(2)^2  \mod q  = 35 \mod 11 = 2$
 
-$f(3) = 7 + 8(3) + 3(3)^2 \ mod \ q  = 58 \ mod \ 11 = 3$
+$f(3) = 7 + 8(3) + 3(3)^2 \mod q  = 58 \mod 11 = 3$
 
-$f(4) = 7 + 8(4) + 3(4)^2 \ mod \ q  = 87 \ mod \ 11 = 10$
+$f(4) = 7 + 8(4) + 3(4)^2 \mod q  = 87 \mod 11 = 10$
 
-$f(5) = 7 + 8(5) + 3(5)^2 \ mod \ q  = 122 \ mod \ 11 = 1$
+$f(5) = 7 + 8(5) + 3(5)^2 \mod q  = 122 \mod 11 = 1$
 
 ### Step 2: Public Commitments
 
 Commitments are generated as $C_j = g^{a_j}$ and are published to all participants:
 
-$C_0 = g^s \ mod \ p = 2^7 \ mod \ 23 = 13$
+$C_0 = g^s \mod p = 2^7 \mod 23 = 13$
 
-$C_1 = g^{a_1} \ mod \ p = 2^8 \ mod \ 23 = 3$
+$C_1 = g^{a_1} \mod p = 2^8 \mod 23 = 3$
 
-$C_2 = g^{a_2} \ mod \ p = 2^3 \ mod \ 23 = 8$
+$C_2 = g^{a_2} \mod p = 2^3 \mod 23 = 8$
 
 ### Step 3: Share verification
 
 Each participant can now calculate the proof:
 
-$g^{f({x_i})} \ mod \ p = g^{y_i} \ mod \ p$
+$g^{f({x_i})} \mod p = g^{y_i} \mod p$
 
 of their share.
 
-$proof_{share1} = g^{y_1} \ mod \ p = 2^7 \ mod \ 23 = 13$
+$proof_{share1} = g^{y_1} \mod  p = 2^7 \mod 23 = 13$
 
-$proof_{share2} = g^{y_2} \ mod \ p = 2^2 \ mod \ 23 = 4$
+$proof_{share2} = g^{y_2} \mod  p = 2^2 \mod  23 = 4$
 
-$proof_{share3} = g^{y_3} \ mod \ p = 2^3 \ mod \ 23 = 8$
+$proof_{share3} = g^{y_3} \mod  p = 2^3 \mod  23 = 8$
 
-$proof_{share4} = g^{y_4} \ mod \ p = 2^{10} \ mod \ 23 = 12$
+$proof_{share4} = g^{y_4} \mod  p = 2^{10} \mod  23 = 12$
 
-$proof_{share5} = g^{y_5} \ mod \ p = 2^1 \ mod \ 23 = 2$
+$proof_{share5} = g^{y_5} \mod  p = 2^1 \mod  23 = 2$
 
 They now verify if their proof is correct by checking if:
 
-$g^{y_i} \ mod \ p = proof_{share \ i} = \prod_{j=0}^{t-1} C_j^{i^j} \mod p$
+$g^{y_i} \mod  p = proof_{share \ i} = \prod_{j=0}^{t-1} C_j^{i^j} \mod p$
 
 Verification:
 
-$verification_{share1} = C_0 \cdot C^{1^1}_1 \cdot C^{1^2}_2 \ mod \ p = 13 \cdot 3^{1} \cdot 8^1 \ mod \ 23 = 13$
+$verification_{share1} = \left( C_0 \cdot C^{1^1}_1 \cdot C^{1^2}_2 \right) \mod  p = \left( 13 \cdot 3^{1} \cdot 8^1 \right) \mod  23 = 13$
 
-$verification_{share2} = C_0 \cdot C^{2^1}_1 \cdot C^{2^2}_2 \ mod \ p = 13 \cdot 3^{2^1} \cdot 8^{2^2} \ mod \ 23 = 13 \cdot 3^{2} \cdot 8^{4} \ mod \ 23 = 4$
+$verification_{share2} = \left( C_0 \cdot C^{2^1}_1 \cdot C^{2^2}_2 \right) \mod  p = \left( 13 \cdot 3^{2^1} \cdot 8^{2^2} \right) \mod  23 = \left( 13 \cdot 3^{2} \cdot 8^{4} \right) \mod  23 = 4$
 
-$verification_{share3} = C_0 \cdot C^{3^1}_1 \cdot C^{3^2}_2 \ mod \ p = 13 \cdot 3^{3^1} \cdot 8^{3^2} \ mod \ 23 = 13 \cdot 3^{3} \cdot 8^{9} \ mod \ 23 = 8$
+$verification_{share3} = \left( C_0 \cdot C^{3^1}_1 \cdot C^{3^2}_2 \right) \mod  p = \left( 13 \cdot 3^{3^1} \cdot 8^{3^2} \right) \mod  23 = \left( 13 \cdot 3^{3} \cdot 8^{9} \right) \mod  23 = 8$
 
-$verification_{share4} = C_0 \cdot C^{4^1}_1 \cdot C^{4^2}_2 \ mod \ p = 13 \cdot 3^{4^1} \cdot 8^{4^2} \ mod \ 23 = 13 \cdot 3^{4} \cdot 8^{16} \ mod \ 23 = 12$
+$verification_{share4} = \left( C_0 \cdot C^{4^1}_1 \cdot C^{4^2}_2 \right) \mod  p = \left( 13 \cdot 3^{4^1} \cdot 8^{4^2} \right) \mod  23 = \left( 13 \cdot 3^{4} \cdot 8^{16} \right) \mod  23 = 12$
 
-$verification_{share5} = C_0 \cdot C^{5^1}_1 \cdot C^{5^2}_2 \ mod \ p = 13 \cdot 3^{5^1} \cdot 8^{5^2} \ mod \ 23 = 13 \cdot 3^{5} \cdot 8^{25} \ mod \ 23 = 2$
+$verification_{share5} = \left( C_0 \cdot C^{5^1}_1 \cdot C^{5^2}_2 \right) \mod  p = \left( 13 \cdot 3^{5^1} \cdot 8^{5^2} \right) \mod  23 = \left( 13 \cdot 3^{5} \cdot 8^{25} \right) \mod  23 = 2$
 
 Since:
 

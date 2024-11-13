@@ -26,10 +26,10 @@ The corresponding share servers are denoted as $(C_1, C_2, ..., C_t)$. The encry
 
 1. **Select a random integer** $(k < |H|)$.
 2. **Compute**:
-   - $y = k \cdot g \mod P$
-   - $(c_1, c_2) = k \cdot h \mod P$
-   - $s_1 = c_1 \cdot x_1 \mod P$
-   - $s_2 = c_2 \cdot x_2 \mod P$
+   - $y = \left( k \cdot g \right) \mod P$
+   - $(c_1, c_2) = \left( k \cdot h \right) \mod P$
+   - $s_1 = \left( c_1 \cdot x_1 \right) \mod P$
+   - $s_2 = \left( c_2 \cdot x_2 \right) \mod P$
 
 The encrypted form of $(X)$ is $(y, s_1, s_2)$.
 
@@ -39,11 +39,11 @@ To decrypt the ciphertext:
 
 1. From the first coordinate $(y)$ of the encryption triplet, the holder of the private key $(d)$ computes:
 
-   $[d \cdot y = (c_1, c_2) \mod P]$
+   $d \cdot y = \left( c_1, c_2 \right) \mod P$
 
 2. Compute the plaintext values:
-   - $x_1 = s_1 \cdot c^{-1} \mod P$
-   - $x_2 = s_2 \cdot c^{-1} \mod P$
+   - $x_1 = \left( s_1 \cdot c^{-1} \right) \mod P$
+   - $x_2 = \left( s_2 \cdot c^{-1} \right) \mod P$
 
 The decrypted form of $(y, s_1, s_2)$ yields $(x_1, x_2)$.
 
@@ -53,15 +53,15 @@ B broadcasts $(y)$ in the encryption triplet $(y, s_1, s_2)$ to $C_1, C_2, \ldot
 
 1. Each server $C_i$ computes:
 
-   $Q_i = d_i \cdot y \mod P$
+   $Q_i = \left( d_i \cdot y \right) \mod P$
 
 2. After obtaining all $(Q_i)$, $B$ computes:
 
    $Q = \left(\frac{1}{t} \sum_{j=1}^{t} Q_j\right) \mod P$
 
 3. Finally, B computes:
-   - $B_1 = s_1 \cdot Q^{-1} \mod P$
-   - $B_2 = s_2 \cdot Q^{-1} \mod P$
+   - $B_1 = \left( s_1 \cdot Q^{-1} \right) \mod P$
+   - $B_2 = \left( s_2 \cdot Q^{-1} \right) \mod P$
 
 Thus, the decrypted values are $(b_1, b_2)$.
 
@@ -73,7 +73,7 @@ $Q = \left(\sum_{j=1}^{t} Q_j \mod P\right) = \frac{1}{t} \sum_{j=1}^{t} d \cdot
 
 This leads to the conclusion:
 
-$(b_1, b_2) = (x_1, x_2) \mod P$
+$(b_1, b_2) = \left( x_1, x_2 \right) \mod P$
 
 
 ## Usage

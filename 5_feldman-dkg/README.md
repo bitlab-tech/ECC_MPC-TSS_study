@@ -68,7 +68,9 @@ Each participant $P_j$ selects a random secret $u_j$ , and they will generate sh
 Here’s how each participant generates their share:
 
 Participant $P_1$ selects $u_1 = 2$:
-- They choose a random polynomial $f(x)= 2 + 4x + 8x^2 \ mod \ q$, where $2$ is the constant term, and $4$ and $8$ are random coefficients.
+- They choose a random polynomial $f(x)= 2 + 4x + 8x^2 \mod  q$,
+
+  where $2$ is the constant term, and $4$ and $8$ are random coefficients.
 - They then compute shares ​$f(1)$, $f(2)$, $f(3)$, $f(4)$ and $f(5)$ for each participant, including themselves:
   - $f_1(1) = 3$
   - $f_1(2) = 9$
@@ -78,7 +80,7 @@ Participant $P_1$ selects $u_1 = 2$:
 - Participant $P_1$  broadcasts commitments $C_1$​ for verification using Feldman VSS.
 
 Participant $P_2$ selects $u_2 = 7$:
-- They choose a random polynomial $f(x)= 7 + 9x + 4x^2 \ mod \ q$
+- They choose a random polynomial $f(x)= 7 + 9x + 4x^2 \mod  q$
 - They then compute shares:
   - $f_2(1) = 9$
   - $f_2(2) = 8$
@@ -88,7 +90,7 @@ Participant $P_2$ selects $u_2 = 7$:
 - Participant $P_2$  broadcasts commitments $C_2$.
 
 Participant $P_3$ selects $u_3 = 4$:
-- They choose a random polynomial $f(x)= 4 + 4x + 6x^2 \ mod \ q$
+- They choose a random polynomial $f(x)= 4 + 4x + 6x^2 \mod  q$
 - They then compute shares:
   - $f_3(1) = 3$
   - $f_3(2) = 3$
@@ -98,7 +100,7 @@ Participant $P_3$ selects $u_3 = 4$:
 - Participant $P_3$  broadcasts commitments $C_3$.
 
 Participant $P_4$ selects $u_4 = 9$:
-- They choose a random polynomial $f(x)= 4 + 2x + 5x^2 \ mod \ q$
+- They choose a random polynomial $f(x)= 4 + 2x + 5x^2 \mod  q$
 - They then compute shares:
   - $f_4(1) = 5$
   - $f_4(2) = 0$
@@ -108,7 +110,7 @@ Participant $P_4$ selects $u_4 = 9$:
 - Participant $P_4$  broadcasts commitments $C_4$
 
 Participant $P_5$ selects $u_5 = 4$:
-- They choose a random polynomial $f(x)= 4 + 8x + 1x^2 \ mod \ q$
+- They choose a random polynomial $f(x)= 4 + 8x + 1x^2 \mod  q$
 - They then compute shares:
   - $f_5(1) = 2$
   - $f_5(2) = 2$
@@ -138,69 +140,69 @@ Now, to generate the final secret key shares:
 - Each participant adds their shares received from the others. For example:
   - $P_1$ computes their final share:
 
-    $share_1 = f_1(1) + f_2(1) + f_3(1) + f_4(1) + f_5(1) = 3 + 9 + 3 + 5 + 2 = 22 \ mod \ 11 = 0$
+    $share_1 = f_1(1) + f_2(1) + f_3(1) + f_4(1) + f_5(1) = 3 + 9 + 3 + 5 + 2 = 22 \mod  11 = 0$
 
   - $P_2$ computes their final share:
   
-    $share_2 = f_1(2) + f_2(2) + f_3(2) + f_4(2) + f_5(2) = 9 + 8 + 3 + 0 + 2 = 22 \ mod \ 11 = 0$
+    $share_2 = f_1(2) + f_2(2) + f_3(2) + f_4(2) + f_5(2) = 9 + 8 + 3 + 0 + 2 = 22 \mod  11 = 0$
 
   - $P_3$ computes their final share:
   
-    $share_3 = f_1(3) + f_2(3) + f_3(3) + f_4(3) + f_5(3) = 9 + 4 + 4 + 5 + 4 = 26 \ mod \ 11 = 4$
+    $share_3 = f_1(3) + f_2(3) + f_3(3) + f_4(3) + f_5(3) = 9 + 4 + 4 + 5 + 4 = 26 \mod  11 = 4$
 
   - $P_4$ computes their final share:
   
-    $share_4 = f_1(4) + f_2(4) + f_3(4) + f_4(4) + f_5(4) = 3 + 8 + 6 + 9 + 8 = 34 \ mod \ 11 = 1$
+    $share_4 = f_1(4) + f_2(4) + f_3(4) + f_4(4) + f_5(4) = 3 + 8 + 6 + 9 + 8 = 34 \mod  11 = 1$
 
   - $P_5$ computes their final share:
   
-    $share_5 = f_1(5) + f_2(5) + f_3(5) + f_4(5) + f_5(5) = 2 + 9 + 9 + 1 + 3 = 24 \ mod \ 11 = 2$
+    $share_5 = f_1(5) + f_2(5) + f_3(5) + f_4(5) + f_5(5) = 2 + 9 + 9 + 1 + 3 = 24 \mod  11 = 2$
 
 ### Reconstruct the secret
 
 If three participants, say $P_1$, $P_2$ and $P_5$, come together to reconstruct the secret, they use Lagrange interpolation with their shares:
 Using $share_1 = 0$, $share_2 = 0$, $share_5 = 2$ they reconstruct the secret, which is the sum of all $u_j$.
 
-$f(0) =  \sum_{j=1}^{t} y_j \lambda_j \ mod \ q = (y_1\lambda_1 + y_2\lambda_2 + y_3\lambda_3) \ mod \ q$
+$f(0) = \left( \sum_{j=1}^{t} y_j \lambda_j \right) \mod  q = \left( y_1\lambda_1 + y_2\lambda_2 + y_3\lambda_3 \right) \mod  q$
 
-$\lambda_j = \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j - x_m} \ mod \ q$
+$\lambda_j = \left( \prod_{\substack{1 \leq m \leq t \\ m \neq j}} \frac{0 - x_m}{x_j - x_m} \right) \mod  q$
 
 - For $share_1$:
 
-  $\lambda_1 = \frac{0 - x_2}{x_1 - x_2} \cdot \frac{0 - x_3}{x_1 - x_3} = \frac{0 - 2}{1 - 2} \cdot \frac{0 - 5}{1 - 5} = \frac{-2}{-1} \cdot \frac{-5}{-4} = 2 \cdot \frac{5}{4} \ mod \ 11$
+  $\lambda_1 = \frac{0 - x_2}{x_1 - x_2} \cdot \frac{0 - x_3}{x_1 - x_3} = \frac{0 - 2}{1 - 2} \cdot \frac{0 - 5}{1 - 5} = \frac{-2}{-1} \cdot \frac{-5}{-4} = 2 \cdot \frac{5}{4} \mod  11$
 
   Since we're working modulo $q$, we'll simplify each step:
-  - $\frac{5}{4} \ mod \ 11 = 5 \cdot 4^{-1} \ mod \ 11$, where $4^{-1}$ is the modular inverse of $4 \ mod \ 11$.
-  - Compute modular inverse of $4 \ mod \ 11: 4^{-1} \ mod \ 11 = 3$ (from [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) or using [the extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)).
-  - So, $\frac{5}{4} \ mod \ 11 = 5 \cdot 3 = 15 \ mod \ 11 = 4$
+  - $\frac{5}{4} \mod  11 = 5 \cdot 4^{-1} \mod  11$, where $4^{-1}$ is the modular inverse of $4 \mod  11$.
+  - Compute modular inverse of $4 \mod  11: 4^{-1} \mod  11 = 3$ (from [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) or using [the extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)).
+  - So, $\frac{5}{4} \mod  11 = 5 \cdot 3 = 15 \mod  11 = 4$
 
   Thus,
 
-  $\lambda_1 = 2 \cdot 4 = 8 \ mod \ 11 = 8$
+  $\lambda_1 = 2 \cdot 4 = 8 \mod  11 = 8$
 
 - For $share_2$:
 
-  $\lambda_2 = \frac{0 - x_1}{x_2 - x_1} \cdot \frac{0 - x_3}{x_2 - x_3} = \frac{0 - 1}{2 - 1} \cdot \frac{0 - 5}{2 - 5} = \frac{-1}{1} \cdot \frac{-5}{-3} = -1 \cdot \frac{5}{3} \ mod \ 11$
+  $\lambda_2 = \frac{0 - x_1}{x_2 - x_1} \cdot \frac{0 - x_3}{x_2 - x_3} = \frac{0 - 1}{2 - 1} \cdot \frac{0 - 5}{2 - 5} = \frac{-1}{1} \cdot \frac{-5}{-3} = -1 \cdot \frac{5}{3} \mod  11$
 
-  Now compute $\frac{5}{3} \ mod \ 11$:
-  - The modular inverse of $3 \ mod \ 11$ is $3^{-1} \ mod \ 11 = 4$.
-  - So, $\frac{5}{3} \ mod \ 11 = 5 \cdot 4 = 20 \ mod \ 11 = 9$
+  Now compute $\frac{5}{3} \mod  11$:
+  - The modular inverse of $3 \mod  11$ is $3^{-1} \mod  11 = 4$.
+  - So, $\frac{5}{3} \mod  11 = 5 \cdot 4 = 20 \mod  11 = 9$
 
   Thus,
 
-  $\lambda_2 = -1 \cdot 9 = -9 \ mod \ 11 = 2$
+  $\lambda_2 = -1 \cdot 9 = -9 \mod  11 = 2$
 
 - For $share_5$:
 
-  $y_3 = \frac{0 - x_1}{x_3 - x_1} \cdot \frac{0 - x_2}{x_3 - x_2} = \frac{0 - 1}{5 - 1} \cdot \frac{0 - 2}{5 - 2} = \frac{-1}{4} \cdot \frac{-2}{3} \ mod \ 11$
+  $y_3 = \frac{0 - x_1}{x_3 - x_1} \cdot \frac{0 - x_2}{x_3 - x_2} = \frac{0 - 1}{5 - 1} \cdot \frac{0 - 2}{5 - 2} = \frac{-1}{4} \cdot \frac{-2}{3} \mod  11$
 
-  Now compute $\frac{1}{4} \ mod \ 11$ and $\frac{2}{3} \ mod \ 11$:
-  - $\frac{1}{4} \ mod \ 11  = 4^{-1} \ mod \ 11 = 3$.
-  - $\frac{2}{3} \ mod \ 11 = 2 \cdot 3^{-1} \ mod \ 11 = 2 \cdot 4 = 8 \ mod \ 11 = 8$.
+  Now compute $\frac{1}{4} \mod  11$ and $\frac{2}{3} \mod  11$:
+  - $\frac{1}{4} \mod  11  = 4^{-1} \mod  11 = 3$.
+  - $\frac{2}{3} \mod  11 = 2 \cdot 3^{-1} \mod  11 = 2 \cdot 4 = 8 \mod  11 = 8$.
 
   Thus,
 
-  $\lambda_3 = 3 \cdot 8 = 24 \ mod \ 11 = 2$
+  $\lambda_3 = 3 \cdot 8 = 24 \mod  11 = 2$
 
 Compute $f(0)$:
 - Substitute the values: 
@@ -208,11 +210,11 @@ Compute $f(0)$:
   - $\lambda_1 = 8, \lambda_2 = 2, \lambda_3 = 2$
 
 
-$f(0) = y_1\lambda_1 + y_2\lambda_2 + y_3\lambda_3 = 0 \cdot 8 + 0 \cdot 2 + 2 \cdot 2 \ mod \ 11 = 4 \ mod \ 11 = 4 \ (1)$
+$f(0) = y_1\lambda_1 + y_2\lambda_2 + y_3\lambda_3 = 0 \cdot 8 + 0 \cdot 2 + 2 \cdot 2 \mod  11 = 4 \mod  11 = 4 \ (1)$
 
 Since each participant contributed random secrets, the reconstructed secret $x$ will be:
 
-$x = u_1 + u_2 + u_3 + u_4 + u_5 = 2 + 7 + 4 + 9 + 4 = 26 \ mod \ 11 =  4 \ (2)$
+$x = u_1 + u_2 + u_3 + u_4 + u_5 = 2 + 7 + 4 + 9 + 4 = 26 \mod  11 =  4 \ (2)$
 
 From $(1)$ and $(2)$ we have:
 
