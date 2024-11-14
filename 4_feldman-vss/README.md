@@ -113,7 +113,7 @@ Where each $C_i$ corresponds to the polynomial's coefficients.
 
 To verify the validity of a share $(x_i, y_i)$, we check that:
 
-$g^{y_i} \mod p = \left( \prod_{j=0}^{t-1} C_j^{x_i^j} \right) \mod p = \left( C_0 \cdot C_1^{x_i^1} \cdot C_2^{x_i^2} \dots \cdot C_t^{x_i^{t}} \right) \mod p$
+$g^{y_i} \mod p = \left( \prod_{j=0}^{t-1} C_j^{x_i^j} \right) \mod p = \left( C_0 \cdot C_1^{x_i^1} \cdot C_2^{x_i^2} \dots \cdot C_t^{x_i^{t-1}} \right) \mod p$
 
 Where the left-hand side is computed directly from the share, and the right-hand side is reconstructed using the commitments. If both sides match, the share is considered valid.
 
