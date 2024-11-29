@@ -56,7 +56,7 @@ This POC is partly based on the research paper: [Threshold Diffie — Hellman Pr
     From $(1)$ and $(2)$ we have:
 
 
-    - $S = \sum_{i=1}^{t} y_i \cdot \lambda_i \cdot B = b \cdot A$
+    - $S = \sum_{i=1}^{t} (y_i \cdot \lambda_i \cdot B) = b \cdot A$
 
 5. **Conclusion**
 
